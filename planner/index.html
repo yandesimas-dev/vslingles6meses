@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano de Inglês — Teacher Yan Simas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-dark: #1a2e1a;
+    --green-accent: #4caf50;
+    --green-light: #a5d6a7;
+    --green-pale: #e8f5e9;
+    --green-text: #2e7d32;
+    --cream: #f1f8e9;
+    --white: #ffffff;
+    --gray-100: #f5f5f0;
+    --gray-200: #e8e8e3;
+    --text: #1a1a18;
+    --text-muted: #6b6b66;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gray-100);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--green-dark);
+    display: flex;
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .bnav-btn {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 10px 4px 8px; border: none;
+    background: transparent; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; gap: 4px;
+    transition: background 0.15s;
+  }
+  .bnav-btn:hover { background: rgba(255,255,255,0.05); }
+  .bnav-btn.active { background: rgba(255,255,255,0.08); }
+  .bnav-btn svg { width: 22px; height: 22px; stroke: var(--green-light); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .bnav-btn.active svg { stroke: #fff; }
+  .bnav-btn span { font-size: 10px; font-weight: 500; color: var(--green-light); letter-spacing: 0.03em; }
+  .bnav-btn.active span { color: #fff; }
+
+  /* ── SCREENS ── */
+  .screen { display: none; padding-bottom: 80px; }
+  .screen.active { display: block; }
+
+  /* ── HEADER ── */
+  .app-header {
+    background: var(--green-dark);
+    padding: 3rem 1.5rem 1.75rem;
+    position: relative; overflow: hidden;
+  }
+  .app-header::before { content:''; position:absolute; top:-50px; right:-50px; width:200px; height:200px; border-radius:50%; background:rgba(255,255,255,0.03); }
+  .app-header::after  { content:''; position:absolute; bottom:-30px; left:40px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,0.025); }
+  .header-tag { display:inline-block; font-size:10px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; background:rgba(255,255,255,0.1); color:var(--green-light); padding:4px 10px; border-radius:20px; margin-bottom:0.6rem; }
+  .app-header h1 { font-family:'Fraunces',serif; font-size:28px; font-weight:700; color:var(--cream); line-height:1.15; }
+  .app-header p { font-size:13px; color:var(--green-light); margin-top:5px; }
+
+  /* ── DAY TABS ── */
+  .day-tabs { display:flex; overflow-x:auto; gap:6px; padding:1rem 1.25rem 0; background:var(--green-dark); scrollbar-width:none; border-bottom:1px solid rgba(255,255,255,0.06); }
+  .day-tabs::-webkit-scrollbar { display:none; }
+  .dtab { flex-shrink:0; padding:7px 16px; border-radius:20px 20px 0 0; border:none; font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; cursor:pointer; background:rgba(255,255,255,0.07); color:var(--green-light); transition:all 0.18s; }
+  .dtab.active { background:var(--cream); color:var(--green-dark); }
+
+  /* ── DAY CONTENT ── */
+  .day-content { display:none; padding:1.25rem; animation:fadeUp 0.22s ease; }
+  .day-content.active { display:block; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── CARDS ── */
+  .card { background:var(--white); border:0.5px solid var(--gray-200); border-radius:var(--radius-md); padding:1.1rem 1.25rem; margin-bottom:0.85rem; }
+  .card-label { font-size:10px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; }
+  .card p { font-size:14px; color:var(--text); line-height:1.65; }
+  .tip-card { background:var(--gray-100); border-left:3px solid var(--green-accent); border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:0.8rem 1rem; margin-bottom:0.85rem; }
+  .tip-card p { font-size:13px; color:var(--text-muted); line-height:1.55; }
+  .tip-card strong { color:var(--text); font-weight:500; }
+  .dark-card { background:var(--green-dark); border-radius:var(--radius-md); padding:1.25rem; margin-bottom:0.85rem; }
+  .dark-card h3 { font-family:'Fraunces',serif; font-size:16px; color:var(--cream); margin-bottom:0.5rem; font-weight:600; }
+  .dark-card p { font-size:13.5px; color:var(--green-light); line-height:1.6; }
+  .dark-card strong { color:var(--cream); }
+
+  /* ── STEPS ── */
+  .steps { list-style:none; }
+  .steps li { display:flex; gap:12px; margin-bottom:0.75rem; align-items:flex-start; }
+  .step-num { flex-shrink:0; width:24px; height:24px; border-radius:50%; background:var(--green-dark); color:var(--green-light); font-size:11px; font-weight:500; display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  .steps li p { font-size:13.5px; color:var(--text); line-height:1.55; }
+  .steps li strong { font-weight:500; }
+
+  /* ── LINK BUTTONS ── */
+  .link-btn { display:flex; align-items:center; gap:10px; padding:11px 14px; background:var(--white); border:0.5px solid var(--gray-200); border-radius:var(--radius-sm); text-decoration:none; font-size:13px; font-weight:500; color:var(--text); margin-bottom:0.5rem; transition:background 0.15s; cursor:pointer; }
+  .link-btn:hover { background:var(--gray-100); }
+  .link-icon { width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; }
+  .link-btn small { font-size:11px; color:var(--text-muted); font-weight:400; display:block; margin-top:1px; }
+  .link-arrow { margin-left:auto; font-size:14px; color:var(--text-muted); }
+
+  /* ── DAY HEADER ── */
+  .day-header { display:flex; align-items:center; gap:12px; margin-bottom:1.1rem; }
+  .day-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+  .day-title h2 { font-family:'Fraunces',serif; font-size:22px; font-weight:700; color:var(--text); line-height:1; }
+  .day-title span { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.09em; font-weight:500; }
+
+  /* ── PLATFORMS SECTION ── */
+  .platforms-section { margin-bottom: 0.85rem; }
+  .platforms-intro { font-size: 13.5px; color: var(--text); line-height: 1.65; margin-bottom: 1rem; }
+  .platform-day { margin-bottom: 0.6rem; }
+  .platform-day-header { display: flex; align-items: center; gap: 10px; margin-bottom: 0.5rem; }
+  .platform-day-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
+  .platform-day-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-accent); flex-shrink: 0; }
+  .platform-row { display: flex; gap: 8px; flex-wrap: wrap; padding-left: 16px; }
+  .platform-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--gray-100); border: 0.5px solid var(--gray-200); border-radius: 20px; padding: 5px 11px 5px 8px; font-size: 12px; font-weight: 500; color: var(--text); text-decoration: none; transition: background 0.15s; }
+  .platform-chip:hover { background: var(--green-pale); border-color: var(--green-accent); }
+  .platform-chip .pchip-icon { font-size: 14px; }
+  .renew-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 500; color: var(--green-text); background: var(--green-pale); border-radius: 20px; padding: 4px 10px; margin-top: 0.75rem; }
+  .renew-badge svg { width: 12px; height: 12px; stroke: var(--green-text); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ── MEM / WEEKEND GRIDS ── */
+  .mem-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:0.85rem; }
+  .mem-card { background:var(--white); border:0.5px solid var(--gray-200); border-radius:var(--radius-sm); padding:0.9rem; }
+  .mem-icon { font-size:20px; margin-bottom:6px; }
+  .mem-card h4 { font-size:13px; font-weight:500; color:var(--text); margin-bottom:4px; }
+  .mem-card p { font-size:12px; color:var(--text-muted); line-height:1.4; }
+  .weekend-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:0.85rem; }
+  .mini-card { background:var(--white); border:0.5px solid var(--gray-200); border-radius:var(--radius-sm); padding:0.9rem 1rem; text-align:center; }
+  .mini-card .micon { font-size:22px; margin-bottom:6px; }
+  .mini-card h4 { font-size:13px; font-weight:500; color:var(--text); }
+  .mini-card p { font-size:12px; color:var(--text-muted); margin-top:3px; line-height:1.4; }
+
+  /* ══════════════════════════════
+     VOCAB SCREEN
+  ══════════════════════════════ */
+  .vheader { background:var(--green-dark); padding:3rem 1.5rem 1.5rem; position:relative; overflow:hidden; }
+  .vheader::before { content:''; position:absolute; top:-50px; right:-50px; width:200px; height:200px; border-radius:50%; background:rgba(255,255,255,0.03); }
+  .vheader h1 { font-family:'Fraunces',serif; font-size:26px; font-weight:700; color:var(--cream); }
+  .vheader p { font-size:13px; color:var(--green-light); margin-top:4px; }
+  .vstat-row { display:flex; gap:8px; margin-top:1rem; }
+  .vstat { background:rgba(255,255,255,0.1); border-radius:20px; padding:5px 12px; font-size:12px; font-weight:500; color:var(--green-light); }
+
+  /* mode tabs */
+  .vmode-tabs { display:flex; background:var(--green-dark); padding:0 1.25rem; border-bottom:1px solid rgba(255,255,255,0.06); gap:1rem; }
+  .vmtab { font-size:13px; font-weight:500; color:var(--green-light); background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; padding:10px 0; border-bottom:2px solid transparent; transition:all 0.15s; }
+  .vmtab.active { color:var(--cream); border-bottom-color:var(--green-accent); }
+
+  /* controls */
+  .vcontrols { padding:1rem 1.25rem 0.5rem; display:flex; flex-direction:column; gap:8px; }
+  .vsearch { position:relative; }
+  .vsearch-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:14px; color:var(--text-muted); }
+  .vsearch input { width:100%; padding:9px 12px 9px 36px; border:0.5px solid var(--gray-200); border-radius:var(--radius-sm); font-size:13px; font-family:'DM Sans',sans-serif; background:var(--white); color:var(--text); outline:none; }
+  .vsearch input:focus { border-color:var(--green-accent); }
+  .vfilters { display:flex; gap:6px; flex-wrap:wrap; }
+  .vfbtn { padding:5px 13px; border-radius:20px; border:0.5px solid var(--gray-200); background:var(--white); font-size:12px; font-weight:500; color:var(--text-muted); cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
+  .vfbtn.active { background:var(--green-dark); color:var(--green-light); border-color:var(--green-dark); }
+
+  /* words grid */
+  .words-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(145px, 1fr)); gap:8px; padding:0.85rem 1.25rem 1.25rem; }
+  .word-card { background:var(--white); border:0.5px solid var(--gray-200); border-radius:var(--radius-md); padding:1rem; }
+  .wc-cat { font-size:10px; font-weight:500; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); margin-bottom:5px; }
+  .wc-en { font-size:19px; font-weight:500; color:var(--text); margin-bottom:2px; }
+  .wc-pt { font-size:12px; color:var(--text-muted); line-height:1.35; }
+  .empty-state { text-align:center; padding:3rem 1.5rem; color:var(--text-muted); font-size:14px; display:none; }
+
+  /* ── QUIZ ── */
+  .quiz-area { display:none; padding:1.25rem; }
+  .quiz-area.visible { display:block; }
+  .quiz-prog-text { font-size:13px; color:var(--text-muted); text-align:center; margin-bottom:0.75rem; }
+  .prog-bar { height:3px; background:var(--gray-200); margin:0 1.25rem 0; }
+  .prog-fill { height:100%; background:var(--green-accent); border-radius:2px; transition:width 0.3s; }
+
+  .quiz-card { background:var(--white); border:0.5px solid var(--gray-200); border-radius:var(--radius-lg); padding:2.5rem 2rem; text-align:center; min-height:180px; display:flex; flex-direction:column; align-items:center; justify-content:center; margin-bottom:1rem; }
+  .qz-cat { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .qz-word { font-family:'Fraunces',serif; font-size:40px; font-weight:700; color:var(--text); margin:8px 0; }
+  .qz-reveal { font-size:18px; color:var(--green-text); font-weight:500; display:none; margin-top:8px; }
+  .qz-reveal.show { display:block; }
+
+  .quiz-actions { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+  .qbtn { padding:9px 22px; border-radius:var(--radius-sm); border:0.5px solid var(--gray-200); background:var(--white); font-size:13px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; color:var(--text); transition:background 0.15s; }
+  .qbtn:hover { background:var(--gray-100); }
+  .qbtn.go-next { background:var(--green-pale); border-color:var(--green-accent); color:var(--green-text); display:none; }
+
+  .quiz-restart { display:block; margin:1.25rem auto 0; padding:9px 22px; border-radius:var(--radius-sm); border:0.5px solid var(--gray-200); background:var(--white); font-size:13px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; color:var(--text); }
+  .quiz-restart:hover { background:var(--gray-100); }
+  /* ── PHRASE / SLANG LISTS ── */
+  .phrase-item { padding:0.7rem 0; border-bottom:0.5px solid var(--gray-200); }
+  .phrase-item:last-child { border-bottom:none; }
+  .phrase-en { font-size:14.5px; font-weight:500; color:var(--text); }
+  .phrase-pt { font-size:12.5px; color:var(--text-muted); margin-top:2px; }
+  .phrase-ex { font-size:12px; color:var(--green-text); font-style:italic; margin-top:4px; }
+  .screen-pad { padding:1.25rem; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ SCREEN: PLANO ═══════════════════════ -->
+<div class="screen active" id="screen-plano">
+
+  <div class="app-header">
+    <div class="header-tag">Teacher Yan Simas</div>
+    <h1>Seu Plano Semanal<br>de Inglês</h1>
+    <p>De segunda a sexta — 15 a 30 min por dia</p>
+  </div>
+
+  <div class="day-tabs">
+    <button class="dtab active" onclick="showDay('intro')">🌱 Início</button>
+    <button class="dtab" onclick="showDay('seg')">Seg</button>
+    <button class="dtab" onclick="showDay('ter')">Ter</button>
+    <button class="dtab" onclick="showDay('qua')">Qua</button>
+    <button class="dtab" onclick="showDay('qui')">Qui</button>
+    <button class="dtab" onclick="showDay('sex')">Sex</button>
+    <button class="dtab" onclick="showDay('fim')">🗓️ Fim de semana</button>
+  </div>
+
+  <!-- INTRO -->
+  <div class="day-content active" id="day-intro">
+    <div class="dark-card">
+      <h3>Por que estudar todo dia?</h3>
+      <p>Seu cérebro aprende inglês da mesma forma que aprende qualquer habilidade: com <strong>repetição consistente</strong>. Estudar 20 minutos todos os dias é muito mais eficaz do que estudar 2 horas só no fim de semana. A consistência cria conexões neurais que se fortalecem com o tempo.</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Técnicas de memorização</div>
+      <p>Use estas estratégias para reter mais com menos esforço:</p>
+    </div>
+    <div class="mem-grid">
+      <div class="mem-card"><div class="mem-icon">🔁</div><h4>Repetição espaçada</h4><p>Revise o conteúdo em intervalos crescentes: 1 dia, 3 dias, 1 semana, 1 mês.</p></div>
+      <div class="mem-card"><div class="mem-icon">🖼️</div><h4>Associação visual</h4><p>Crie imagens mentais para cada palavra. Quanto mais absurda, mais fácil lembrar.</p></div>
+      <div class="mem-card"><div class="mem-icon">📢</div><h4>Voz em voz alta</h4><p>Fale as palavras novas em voz alta. O ato de falar ativa mais regiões do cérebro.</p></div>
+      <div class="mem-card"><div class="mem-icon">🔗</div><h4>Contexto real</h4><p>Aprenda palavras dentro de frases reais. O contexto ajuda a fixar o sentido.</p></div>
+    </div>
+    <div class="tip-card">
+      <p><strong>Dica do Teacher Yan:</strong> Não tente aprender tudo de uma vez. Foque no que é relevante para você. Cada pequeno passo conta — e você já está dando o primeiro agora. 💪</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Estrutura da semana</div>
+      <p>Cada dia tem um foco diferente para trabalhar todas as habilidades do inglês de forma equilibrada. Navegue pelos dias acima para ver o que fazer em cada um.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Plataformas de prática diária</div>
+      <p class="platforms-intro">Cada dia da semana é acompanhado de plataformas que o Yan usou e ainda usa na própria jornada de aprendizado. Todas se renovam diariamente e podem ser usadas <strong>sem limite de conteúdo</strong> — quanto mais você explorar, mais você aprende.</p>
+
+      <div class="platforms-section">
+
+        <div class="platform-day">
+          <div class="platform-day-header">
+            <div class="platform-day-dot"></div>
+            <span class="platform-day-label">Segunda — Vocabulário</span>
+          </div>
+          <div class="platform-row">
+            <a class="platform-chip" href="https://www.youtube.com" target="_blank"><span class="pchip-icon">▶️</span>YouTube</a>
+            <a class="platform-chip" href="https://www.duolingo.com" target="_blank"><span class="pchip-icon">🦉</span>Duolingo</a>
+          </div>
+        </div>
+
+        <div class="platform-day">
+          <div class="platform-day-header">
+            <div class="platform-day-dot"></div>
+            <span class="platform-day-label">Terça — Speaking</span>
+          </div>
+          <div class="platform-row">
+            <a class="platform-chip" href="https://lingoclip.com" target="_blank"><span class="pchip-icon">🎵</span>Lingo Clip</a>
+            <a class="platform-chip" href="https://www.youtube.com" target="_blank"><span class="pchip-icon">▶️</span>YouTube</a>
+          </div>
+        </div>
+
+        <div class="platform-day">
+          <div class="platform-day-header">
+            <div class="platform-day-dot"></div>
+            <span class="platform-day-label">Quarta — Reading</span>
+          </div>
+          <div class="platform-row">
+            <a class="platform-chip" href="https://newsinlevels.com" target="_blank"><span class="pchip-icon">📰</span>News in Levels</a>
+            <a class="platform-chip" href="https://www.eslfast.com" target="_blank"><span class="pchip-icon">📗</span>ESL Fast</a>
+          </div>
+        </div>
+
+        <div class="platform-day">
+          <div class="platform-day-header">
+            <div class="platform-day-dot"></div>
+            <span class="platform-day-label">Quinta — Listening</span>
+          </div>
+          <div class="platform-row">
+            <a class="platform-chip" href="https://lingoclip.com" target="_blank"><span class="pchip-icon">🎵</span>Lingo Clip</a>
+            <a class="platform-chip" href="https://www.youtube.com" target="_blank"><span class="pchip-icon">▶️</span>YouTube</a>
+          </div>
+        </div>
+
+        <div class="platform-day">
+          <div class="platform-day-header">
+            <div class="platform-day-dot"></div>
+            <span class="platform-day-label">Sexta — Writing</span>
+          </div>
+          <div class="platform-row">
+            <a class="platform-chip" href="https://lingoclip.com" target="_blank"><span class="pchip-icon">🎵</span>Lingo Clip</a>
+            <a class="platform-chip" href="https://chat.openai.com" target="_blank"><span class="pchip-icon">🤖</span>ChatGPT</a>
+          </div>
+        </div>
+
+        <div class="platform-day">
+          <div class="platform-day-header">
+            <div class="platform-day-dot"></div>
+            <span class="platform-day-label">Fim de semana — Review</span>
+          </div>
+          <div class="platform-row">
+            <a class="platform-chip" href="https://www.netflix.com" target="_blank"><span class="pchip-icon">🎬</span>Netflix</a>
+            <a class="platform-chip" href="https://www.youtube.com" target="_blank"><span class="pchip-icon">▶️</span>YouTube</a>
+            <a class="platform-chip" href="https://www.duolingo.com" target="_blank"><span class="pchip-icon">🦉</span>Duolingo</a>
+          </div>
+        </div>
+
+        <div class="renew-badge">
+          <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Todas as plataformas renovam conteúdo diariamente
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SEGUNDA -->
+  <div class="day-content" id="day-seg">
+    <div class="day-header">
+      <div class="day-icon" style="background:#e8f5e9">📖</div>
+      <div class="day-title"><span>Segunda-feira</span><h2>Vocabulário</h2></div>
+    </div>
+    <div class="tip-card"><p><strong>Foco do dia:</strong> Quanto mais vocabulário você tiver, mais rápido você vai entender e se expressar em inglês. Hoje você vai construir esse banco de palavras.</p></div>
+    <div class="card">
+      <div class="card-label">Passo a passo</div>
+      <ul class="steps">
+        <li><span class="step-num">1</span><p>Vá até a aba <strong>Vocabulários</strong> (ícone no menu abaixo) e escolha <strong>5 palavras essenciais</strong> da semana. Estude o significado, pronúncia e exemplo de uso.</p></li>
+        <li><span class="step-num">2</span><p>Abra o YouTube e escolha <strong>um vídeo ou cena de filme em inglês</strong> de qualquer tema que te interessa.</p></li>
+        <li><span class="step-num">3</span><p>Assista e <strong>anote 5 palavras</strong> que você escutou e não conhecia. Pesquise o significado.</p></li>
+        <li><span class="step-num">4</span><p>No total você terá <strong>10 palavras novas</strong> para a semana. Revise todas antes de dormir.</p></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-label">Recurso</div>
+      <a class="link-btn" href="https://www.youtube.com" target="_blank">
+        <div class="link-icon" style="background:#fff0f0">▶️</div>
+        <div><span>YouTube</span><small>Vídeos e cenas de filmes em inglês</small></div>
+        <span class="link-arrow">↗</span>
+      </a>
+    </div>
+    <div class="tip-card"><p><strong>Técnica:</strong> Use a repetição espaçada — revise suas 10 palavras hoje, amanhã, na sexta e no fim de semana.</p></div>
+  </div>
+
+  <!-- TERÇA -->
+  <div class="day-content" id="day-ter">
+    <div class="day-header">
+      <div class="day-icon" style="background:#e3f2fd">🎙️</div>
+      <div class="day-title"><span>Terça-feira</span><h2>Speaking</h2></div>
+    </div>
+    <div class="tip-card"><p><strong>Foco do dia:</strong> A pronúncia se aprende imitando, não memorizando regras. Hoje você vai treinar sua fala com uma das técnicas mais eficazes que existem.</p></div>
+    <div class="card">
+      <div class="card-label">O que é Shadowing?</div>
+      <p>Shadowing (sombreamento) é uma técnica onde você <strong>fala junto</strong> com um falante nativo ao mesmo tempo que ele fala, imitando o ritmo, a entonação e a pronúncia. É assim que atores aprendem sotaques.</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Como praticar hoje</div>
+      <ul class="steps">
+        <li><span class="step-num">1</span><p>Escolha um <strong>vídeo em inglês no YouTube</strong> ou uma cena de filme — de preferência com um falante claro e pausado.</p></li>
+        <li><span class="step-num">2</span><p>Assista uma vez sem falar nada, só para entender o contexto.</p></li>
+        <li><span class="step-num">3</span><p>Agora <strong>fale junto</strong> com o apresentador. Imite tudo: velocidade, entonação, pausas.</p></li>
+        <li><span class="step-num">4</span><p>Repita o mesmo trecho <strong>3 a 5 vezes</strong> até sua pronúncia ficar mais parecida.</p></li>
+        <li><span class="step-num">5</span><p>Use o <strong>Lingo Clip no modo Karaoke</strong> para praticar de forma ainda mais guiada.</p></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-label">Recursos</div>
+      <a class="link-btn" href="https://lingoclip.com" target="_blank">
+        <div class="link-icon" style="background:#e8eaf6">🎵</div>
+        <div><span>Lingo Clip — modo Karaoke</span><small>Pratique speaking com músicas e vídeos reais</small></div>
+        <span class="link-arrow">↗</span>
+      </a>
+      <a class="link-btn" href="https://www.youtube.com" target="_blank">
+        <div class="link-icon" style="background:#fff0f0">▶️</div>
+        <div><span>YouTube</span><small>Cenas de séries ou vídeos em inglês</small></div>
+        <span class="link-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- QUARTA -->
+  <div class="day-content" id="day-qua">
+    <div class="day-header">
+      <div class="day-icon" style="background:#f3e5f5">📚</div>
+      <div class="day-title"><span>Quarta-feira</span><h2>Reading</h2></div>
+    </div>
+    <div class="tip-card"><p><strong>Foco do dia:</strong> Ler em inglês treina seu cérebro a reconhecer estruturas e vocabulário de forma natural, sem traduzir palavra por palavra.</p></div>
+    <div class="card">
+      <div class="card-label">Como ler de forma eficaz</div>
+      <ul class="steps">
+        <li><span class="step-num">1</span><p>Escolha um texto de acordo com seu nível — não precisa entender tudo, só o contexto geral.</p></li>
+        <li><span class="step-num">2</span><p>Leia o texto uma vez <strong>sem dicionário</strong> para entender a ideia principal.</p></li>
+        <li><span class="step-num">3</span><p>Releia e anote as palavras que você não conhece. Pesquise depois, não durante.</p></li>
+        <li><span class="step-num">4</span><p>Tente resumir o que você leu em inglês, mesmo que seja uma frase simples.</p></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-label">Recursos</div>
+      <a class="link-btn" href="https://www.eslfast.com" target="_blank">
+        <div class="link-icon" style="background:#e8f5e9">📗</div>
+        <div><span>ESL Fast</span><small>Textos curtos para iniciantes e intermediários</small></div>
+        <span class="link-arrow">↗</span>
+      </a>
+      <a class="link-btn" href="https://newsinlevels.com" target="_blank">
+        <div class="link-icon" style="background:#fff8e1">📰</div>
+        <div><span>News in Levels</span><small>Notícias reais em três níveis de dificuldade</small></div>
+        <span class="link-arrow">↗</span>
+      </a>
+    </div>
+    <div class="tip-card"><p><strong>Dica:</strong> No News in Levels você pode escolher o nível 1, 2 ou 3. Iniciantes começam no 1, intermediários tentam o 2.</p></div>
+  </div>
+
+  <!-- QUINTA -->
+  <div class="day-content" id="day-qui">
+    <div class="day-header">
+      <div class="day-icon" style="background:#fff3e0">🎧</div>
+      <div class="day-title"><span>Quinta-feira</span><h2>Listening</h2></div>
+    </div>
+    <div class="tip-card"><p><strong>Foco do dia:</strong> Entender inglês falado é diferente de ler — o ritmo, as contrações e o sotaque mudam tudo. A escuta ativa é o segredo para treinar o ouvido.</p></div>
+    <div class="card">
+      <div class="card-label">Escuta ativa — como fazer</div>
+      <ul class="steps">
+        <li><span class="step-num">1</span><p>Escolha uma cena de série, filme ou vídeo em inglês no YouTube.</p></li>
+        <li><span class="step-num">2</span><p>Assista <strong>sem legenda</strong> primeiro. Tente captar o máximo pelo contexto.</p></li>
+        <li><span class="step-num">3</span><p>Assista novamente <strong>com legenda em inglês</strong> (nunca em português nesta etapa).</p></li>
+        <li><span class="step-num">4</span><p>Preste atenção em como as palavras se conectam na fala — diferente do que você lê.</p></li>
+        <li><span class="step-num">5</span><p>Use o <strong>Lingo Clip no modo de escolher a alternativa</strong> para testar seu listening.</p></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-label">Recursos</div>
+      <a class="link-btn" href="https://lingoclip.com" target="_blank">
+        <div class="link-icon" style="background:#e8eaf6">🎵</div>
+        <div><span>Lingo Clip — escolher alternativa</span><small>Teste seu listening de forma interativa</small></div>
+        <span class="link-arrow">↗</span>
+      </a>
+      <a class="link-btn" href="https://www.youtube.com" target="_blank">
+        <div class="link-icon" style="background:#fff0f0">▶️</div>
+        <div><span>YouTube</span><small>Cenas de filmes e vídeos em inglês</small></div>
+        <span class="link-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- SEXTA -->
+  <div class="day-content" id="day-sex">
+    <div class="day-header">
+      <div class="day-icon" style="background:#fce4ec">✍️</div>
+      <div class="day-title"><span>Sexta-feira</span><h2>Writing</h2></div>
+    </div>
+    <div class="tip-card"><p><strong>Foco do dia:</strong> Escrever em inglês consolida tudo o que você aprendeu na semana. Não precisa ser perfeito — o importante é colocar em prática e aprender com os erros.</p></div>
+    <div class="card">
+      <div class="card-label">O que fazer hoje</div>
+      <ul class="steps">
+        <li><span class="step-num">1</span><p>Use o <strong>Lingo Clip no modo de completar escrevendo</strong> para praticar de forma guiada.</p></li>
+        <li><span class="step-num">2</span><p>Escreva pelo menos <strong>uma frase própria em inglês</strong> — sobre seu dia, algo que aprendeu, ou usando uma das palavras da semana.</p></li>
+        <li><span class="step-num">3</span><p>Cole sua frase no <strong>ChatGPT</strong> e peça: <em>"Correct this sentence and explain the mistakes: [sua frase]"</em></p></li>
+        <li><span class="step-num">4</span><p>Reescreva a frase corrigida para fixar a forma certa na memória.</p></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-label">Recursos</div>
+      <a class="link-btn" href="https://lingoclip.com" target="_blank">
+        <div class="link-icon" style="background:#e8eaf6">🎵</div>
+        <div><span>Lingo Clip — completar escrevendo</span><small>Pratique a escrita com contexto real</small></div>
+        <span class="link-arrow">↗</span>
+      </a>
+      <a class="link-btn" href="https://chat.openai.com" target="_blank">
+        <div class="link-icon" style="background:#f1f8e9">🤖</div>
+        <div><span>ChatGPT</span><small>Corrija sua escrita e entenda os erros</small></div>
+        <span class="link-arrow">↗</span>
+      </a>
+    </div>
+    <div class="tip-card"><p><strong>Dica:</strong> Não tenha vergonha dos erros. Todo erro corrigido é um passo à frente. Escrever mal hoje é parte de escrever bem amanhã.</p></div>
+  </div>
+
+  <!-- FIM DE SEMANA -->
+  <div class="day-content" id="day-fim">
+    <div class="day-header">
+      <div class="day-icon" style="background:#e8f5e9">🗓️</div>
+      <div class="day-title"><span>Sábado e Domingo</span><h2>Review & Reflection</h2></div>
+    </div>
+    <div class="dark-card">
+      <h3>A técnica da revisão ativa</h3>
+      <p>Em vez de reler suas anotações, <strong>feche o caderno e tente lembrar</strong>. Quanto mais esforço seu cérebro faz para recuperar uma informação, mais forte ela fica gravada. Isso se chama "efeito de teste" — comprovado pela ciência.</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Como revisar a semana</div>
+      <ul class="steps">
+        <li><span class="step-num">1</span><p>Feche tudo e tente lembrar: <strong>quais foram as 10 palavras que aprendi essa semana?</strong> Escreva de cabeça.</p></li>
+        <li><span class="step-num">2</span><p>Tente lembrar de <strong>algo que você praticou no shadowing</strong> — repita a frase em voz alta.</p></li>
+        <li><span class="step-num">3</span><p>Relembre o que você <strong>leu na quarta</strong> — qual era o assunto? Você consegue contar em inglês?</p></li>
+        <li><span class="step-num">4</span><p>Revise a <strong>frase que você escreveu na sexta</strong> já corrigida. Tente escrever uma nova parecida.</p></li>
+        <li><span class="step-num">5</span><p>Se não conseguir lembrar algo, não tem problema — volte ao material. O esforço de tentar já ajuda.</p></li>
+      </ul>
+    </div>
+    <div class="weekend-grid">
+      <div class="mini-card"><div class="micon">😴</div><h4>Descanse também</h4><p>O cérebro consolida memórias durante o descanso.</p></div>
+      <div class="mini-card"><div class="micon">🎬</div><h4>Consuma em inglês</h4><p>Assista algo em inglês por prazer — sem obrigação.</p></div>
+      <div class="mini-card"><div class="micon">📝</div><h4>Prepare a semana</h4><p>Pense em que vocabulário quer aprender na próxima.</p></div>
+      <div class="mini-card"><div class="micon">🏆</div><h4>Celebre o progresso</h4><p>Você completou mais uma semana. Isso é real. 🚀</p></div>
+    </div>
+    <div class="tip-card"><p><strong>Lembre-se:</strong> Consistência bate intensidade. Uma semana inteira concluída já te coloca à frente de 90% das pessoas que tentam aprender inglês. Keep going!</p></div>
+  </div>
+
+</div><!-- /screen-plano -->
+
+
+<!-- ═══════════════════════ SCREEN: VOCABULÁRIOS ═══════════════════════ -->
+<div class="screen" id="screen-vocab">
+
+  <div class="vheader">
+    <div class="header-tag">Teacher Yan Simas</div>
+    <h1>Vocabulários Essenciais</h1>
+    <p id="vsub">palavras fundamentais e por tema</p>
+    <div class="vstat-row">
+      <div class="vstat" id="vstat-count">📚 palavras</div>
+    </div>
+  </div>
+
+  <div class="vmode-tabs">
+    <button class="vmtab active" onclick="setVMode('browse')">Explorar</button>
+    <button class="vmtab" onclick="setVMode('quiz')">Praticar</button>
+  </div>
+
+  <!-- EXPLORAR -->
+  <div id="vbrowse-area">
+    <div class="vcontrols">
+      <div class="vsearch">
+        <span class="vsearch-icon">🔍</span>
+        <input type="text" id="vsearch" placeholder="Buscar palavra..." oninput="vFilterWords()">
+      </div>
+      <div class="vfilters">
+        <button class="vfbtn active" onclick="vFilterCat(this,'all')">Todas</button>
+        <button class="vfbtn" onclick="vFilterCat(this,'pronome')">Pronomes</button>
+        <button class="vfbtn" onclick="vFilterCat(this,'verbo')">Verbos</button>
+        <button class="vfbtn" onclick="vFilterCat(this,'interrogativo')">Interrogativos</button>
+        <button class="vfbtn" onclick="vFilterCat(this,'conector')">Conectores</button>
+        <button class="vfbtn" onclick="vFilterCat(this,'modal')">Modais</button>
+        <button class="vfbtn" onclick="vFilterCat(this,'casa')">Casa</button>
+        <button class="vfbtn" onclick="vFilterCat(this,'objeto')">Objetos</button>
+        <button class="vfbtn" onclick="vFilterCat(this,'preposicao')">Preposições</button>
+        <button class="vfbtn" onclick="vFilterCat(this,'comida')">Comida</button>
+      </div>
+    </div>
+    <div class="words-grid" id="words-grid"></div>
+    <div class="empty-state" id="empty-state">Nenhuma palavra encontrada.</div>
+  </div>
+
+  <!-- PRATICAR -->
+  <div class="quiz-area" id="quiz-area">
+    <div class="prog-bar" style="margin-top:1rem"><div class="prog-fill" id="vprog-fill" style="width:0%"></div></div>
+    <p class="quiz-prog-text" id="qprog-text" style="margin-top:0.75rem">Carta 1 de 52</p>
+    <div class="quiz-card">
+      <div class="qz-cat" id="qz-cat"></div>
+      <div class="qz-word" id="qz-word"></div>
+      <div class="qz-reveal" id="qz-reveal"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="qbtn" id="qreveal-btn" onclick="qReveal()">Ver tradução</button>
+      <button class="qbtn go-next" id="qnext-btn" onclick="qNext()">Próxima →</button>
+    </div>
+    <button class="quiz-restart" onclick="restartQuiz()">↺ Recomeçar</button>
+  </div>
+
+</div><!-- /screen-vocab -->
+
+
+
+<!-- ═══════════════════════ SCREEN: FRASES ═══════════════════════ -->
+<div class="screen" id="screen-frases">
+  <div class="vheader">
+    <div class="header-tag">Teacher Yan Simas</div>
+    <h1>Frases do Dia a Dia</h1>
+    <p>Expressões prontas para usar em situações reais</p>
+  </div>
+  <div class="screen-pad">
+    <div class="card">
+      <div class="card-label">🤝 Cumprimentos & Small Talk</div>
+      <div class="phrase-item"><div class="phrase-en">How's it going?</div><div class="phrase-pt">E aí, como vai?</div></div>
+      <div class="phrase-item"><div class="phrase-en">What's up?</div><div class="phrase-pt">E aí? / Beleza?</div></div>
+      <div class="phrase-item"><div class="phrase-en">Long time no see!</div><div class="phrase-pt">Quanto tempo!</div></div>
+      <div class="phrase-item"><div class="phrase-en">How have you been?</div><div class="phrase-pt">Como você tem estado?</div></div>
+      <div class="phrase-item"><div class="phrase-en">Nice to meet you.</div><div class="phrase-pt">Prazer em conhecer você.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Take care!</div><div class="phrase-pt">Se cuida!</div></div>
+    </div>
+    <div class="card">
+      <div class="card-label">💼 No trabalho</div>
+      <div class="phrase-item"><div class="phrase-en">Can we schedule a meeting?</div><div class="phrase-pt">Podemos marcar uma reunião?</div></div>
+      <div class="phrase-item"><div class="phrase-en">I'll get back to you.</div><div class="phrase-pt">Eu te retorno.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Let me check and confirm.</div><div class="phrase-pt">Deixa eu verificar e confirmar.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Sounds good to me.</div><div class="phrase-pt">Por mim, tudo certo.</div></div>
+      <div class="phrase-item"><div class="phrase-en">I'm on it.</div><div class="phrase-pt">Já estou cuidando disso.</div></div>
+    </div>
+    <div class="card">
+      <div class="card-label">✈️ Viagem</div>
+      <div class="phrase-item"><div class="phrase-en">Where is the gate?</div><div class="phrase-pt">Onde fica o portão de embarque?</div></div>
+      <div class="phrase-item"><div class="phrase-en">I have a connecting flight.</div><div class="phrase-pt">Tenho um voo de conexão.</div></div>
+      <div class="phrase-item"><div class="phrase-en">How do I get to the city center?</div><div class="phrase-pt">Como eu chego ao centro?</div></div>
+      <div class="phrase-item"><div class="phrase-en">Is this seat taken?</div><div class="phrase-pt">Esse assento está ocupado?</div></div>
+      <div class="phrase-item"><div class="phrase-en">Could you help me, please?</div><div class="phrase-pt">Você poderia me ajudar, por favor?</div></div>
+    </div>
+    <div class="card">
+      <div class="card-label">🍽️ Restaurante & Compras</div>
+      <div class="phrase-item"><div class="phrase-en">Can I see the menu, please?</div><div class="phrase-pt">Posso ver o cardápio, por favor?</div></div>
+      <div class="phrase-item"><div class="phrase-en">I'll have the chicken.</div><div class="phrase-pt">Vou querer o frango.</div></div>
+      <div class="phrase-item"><div class="phrase-en">The check, please.</div><div class="phrase-pt">A conta, por favor.</div></div>
+      <div class="phrase-item"><div class="phrase-en">How much is it?</div><div class="phrase-pt">Quanto custa?</div></div>
+      <div class="phrase-item"><div class="phrase-en">Do you take credit card?</div><div class="phrase-pt">Vocês aceitam cartão?</div></div>
+      <div class="phrase-item"><div class="phrase-en">Can I get this to go?</div><div class="phrase-pt">Posso levar pra viagem?</div></div>
+    </div>
+    <div class="card">
+      <div class="card-label">🆘 Pedindo ajuda</div>
+      <div class="phrase-item"><div class="phrase-en">Sorry, could you repeat that?</div><div class="phrase-pt">Desculpe, pode repetir?</div></div>
+      <div class="phrase-item"><div class="phrase-en">Could you speak more slowly?</div><div class="phrase-pt">Pode falar mais devagar?</div></div>
+      <div class="phrase-item"><div class="phrase-en">What does ___ mean?</div><div class="phrase-pt">O que ___ significa?</div></div>
+      <div class="phrase-item"><div class="phrase-en">How do you say ___ in English?</div><div class="phrase-pt">Como se diz ___ em inglês?</div></div>
+      <div class="phrase-item"><div class="phrase-en">I don't understand.</div><div class="phrase-pt">Eu não entendo.</div></div>
+    </div>
+  </div>
+</div><!-- /screen-frases -->
+
+<!-- ═══════════════════════ SCREEN: GÍRIAS ═══════════════════════ -->
+<div class="screen" id="screen-girias">
+  <div class="vheader">
+    <div class="header-tag">Teacher Yan Simas</div>
+    <h1>Gírias & Expressões</h1>
+    <p>Como os nativos realmente falam no dia a dia</p>
+  </div>
+  <div class="screen-pad">
+    <div class="card">
+      <div class="card-label">🔥 Mais usadas</div>
+      <div class="phrase-item"><div class="phrase-en">Hang out</div><div class="phrase-pt">sair / passar um tempo</div><div class="phrase-ex">Let's hang out this weekend.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Chill</div><div class="phrase-pt">relaxar / de boa</div><div class="phrase-ex">I'm just chilling at home.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Awesome</div><div class="phrase-pt">incrível / demais</div><div class="phrase-ex">That movie was awesome!</div></div>
+      <div class="phrase-item"><div class="phrase-en">Cool</div><div class="phrase-pt">legal / massa</div><div class="phrase-ex">That's a cool idea.</div></div>
+      <div class="phrase-item"><div class="phrase-en">No worries</div><div class="phrase-pt">sem problema</div><div class="phrase-ex">Thanks! — No worries.</div></div>
+      <div class="phrase-item"><div class="phrase-en">My bad</div><div class="phrase-pt">foi mal / culpa minha</div><div class="phrase-ex">My bad, I forgot to call.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Gonna / Wanna / Gotta</div><div class="phrase-pt">vou / quero / tenho que (informal)</div><div class="phrase-ex">I'm gonna call you later.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Kinda</div><div class="phrase-pt">meio que / tipo</div><div class="phrase-ex">I'm kinda tired today.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Piece of cake</div><div class="phrase-pt">moleza / muito fácil</div><div class="phrase-ex">The test was a piece of cake.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Hit the road</div><div class="phrase-pt">cair na estrada / ir embora</div><div class="phrase-ex">It's late, let's hit the road.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Catch up</div><div class="phrase-pt">colocar o papo em dia</div><div class="phrase-ex">Let's catch up over coffee.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Broke</div><div class="phrase-pt">duro / sem dinheiro</div><div class="phrase-ex">I can't go out, I'm broke.</div></div>
+    </div>
+    <div class="card">
+      <div class="card-label">💬 Reações & expressões</div>
+      <div class="phrase-item"><div class="phrase-en">For real?</div><div class="phrase-pt">sério? / é mesmo?</div><div class="phrase-ex">You won? For real?</div></div>
+      <div class="phrase-item"><div class="phrase-en">No way!</div><div class="phrase-pt">de jeito nenhum / não acredito!</div><div class="phrase-ex">No way, that's amazing!</div></div>
+      <div class="phrase-item"><div class="phrase-en">Same here</div><div class="phrase-pt">comigo também / idem</div><div class="phrase-ex">I am tired. — Same here.</div></div>
+      <div class="phrase-item"><div class="phrase-en">It's up to you</div><div class="phrase-pt">você que sabe / depende de você</div><div class="phrase-ex">Where to eat? It's up to you.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Never mind</div><div class="phrase-pt">deixa pra lá</div><div class="phrase-ex">Never mind, it's not important.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Take it easy</div><div class="phrase-pt">vai com calma / se cuida</div><div class="phrase-ex">Take it easy, man.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Make sense</div><div class="phrase-pt">fazer sentido</div><div class="phrase-ex">That makes sense now.</div></div>
+      <div class="phrase-item"><div class="phrase-en">Hang on</div><div class="phrase-pt">espera aí</div><div class="phrase-ex">Hang on, I'll be right there.</div></div>
+    </div>
+  </div>
+</div><!-- /screen-girias -->
+
+
+<!-- ═══════════════════════ BOTTOM NAV ═══════════════════════ -->
+<nav class="bottom-nav">
+  <button class="bnav-btn active" id="bnav-plano" onclick="switchScreen('plano')">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span>Plano</span>
+  </button>
+  <button class="bnav-btn" id="bnav-vocab" onclick="switchScreen('vocab')">
+    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    <span>Vocab</span>
+  </button>
+  <button class="bnav-btn" id="bnav-frases" onclick="switchScreen('frases')">
+    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span>Frases</span>
+  </button>
+  <button class="bnav-btn" id="bnav-girias" onclick="switchScreen('girias')">
+    <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 16.5 5.5 21 7.5 13.5 2 9 9 9 12 2"/></svg>
+    <span>Gírias</span>
+  </button>
+</nav>
+
+
+<script>
+/* ── NAVIGATION ── */
+function switchScreen(s) {
+  document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.bnav-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('screen-' + s).classList.add('active');
+  document.getElementById('bnav-' + s).classList.add('active');
+  if (s === 'vocab') vRender();
+}
+
+function showDay(id) {
+  document.querySelectorAll('.day-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.dtab').forEach(b => b.classList.remove('active'));
+  document.getElementById('day-' + id).classList.add('active');
+  const map = {intro:0, seg:1, ter:2, qua:3, qui:4, sex:5, fim:6};
+  document.querySelectorAll('.dtab')[map[id]].classList.add('active');
+}
+
+/* ── VOCAB DATA ── */
+const words = [
+  {en:'I', pt:'eu', cat:'pronome'},
+  {en:'You', pt:'você / vocês', cat:'pronome'},
+  {en:'He', pt:'ele', cat:'pronome'},
+  {en:'She', pt:'ela', cat:'pronome'},
+  {en:'It', pt:'isso / ele / ela', cat:'pronome'},
+  {en:'We', pt:'nós', cat:'pronome'},
+  {en:'They', pt:'eles / elas', cat:'pronome'},
+  {en:'Am', pt:'sou / estou', cat:'verbo'},
+  {en:'Is', pt:'é / está', cat:'verbo'},
+  {en:'Are', pt:'são / estão', cat:'verbo'},
+  {en:'Do', pt:'fazer / auxiliar', cat:'verbo'},
+  {en:'Does', pt:'auxiliar', cat:'verbo'},
+  {en:'Did', pt:'fez / auxiliar no passado', cat:'verbo'},
+  {en:'This', pt:'este / esta / isso', cat:'pronome'},
+  {en:'That', pt:'aquele / aquela / aquilo', cat:'pronome'},
+  {en:'These', pt:'estes / estas', cat:'pronome'},
+  {en:'Those', pt:'aqueles / aquelas', cat:'pronome'},
+  {en:'What', pt:'o quê / qual', cat:'interrogativo'},
+  {en:'Where', pt:'onde', cat:'interrogativo'},
+  {en:'When', pt:'quando', cat:'interrogativo'},
+  {en:'Who', pt:'quem', cat:'interrogativo'},
+  {en:'Why', pt:'por quê', cat:'interrogativo'},
+  {en:'How', pt:'como', cat:'interrogativo'},
+  {en:'How much', pt:'quanto', cat:'interrogativo'},
+  {en:'How many', pt:'quantos', cat:'interrogativo'},
+  {en:'Have', pt:'ter', cat:'verbo'},
+  {en:'Go', pt:'ir', cat:'verbo'},
+  {en:'Get', pt:'pegar / conseguir / receber', cat:'verbo'},
+  {en:'Make', pt:'fazer / criar', cat:'verbo'},
+  {en:'Take', pt:'pegar / levar', cat:'verbo'},
+  {en:'Come', pt:'vir', cat:'verbo'},
+  {en:'Want', pt:'querer', cat:'verbo'},
+  {en:'Need', pt:'precisar', cat:'verbo'},
+  {en:'Know', pt:'saber / conhecer', cat:'verbo'},
+  {en:'Think', pt:'pensar', cat:'verbo'},
+  {en:'See', pt:'ver', cat:'verbo'},
+  {en:'Say', pt:'dizer', cat:'verbo'},
+  {en:'Give', pt:'dar', cat:'verbo'},
+  {en:'Find', pt:'encontrar', cat:'verbo'},
+  {en:'Work', pt:'trabalhar', cat:'verbo'},
+  {en:'Like', pt:'gostar', cat:'verbo'},
+  {en:'Use', pt:'usar', cat:'verbo'},
+  {en:'Yes', pt:'sim', cat:'conector'},
+  {en:'No', pt:'não', cat:'conector'},
+  {en:'Not', pt:'não', cat:'conector'},
+  {en:'And', pt:'e', cat:'conector'},
+  {en:'But', pt:'mas', cat:'conector'},
+  {en:'Because', pt:'porque', cat:'conector'},
+  {en:'Or', pt:'ou', cat:'conector'},
+  {en:'Can', pt:'poder / conseguir', cat:'modal'},
+  {en:'Will', pt:'vai / irá', cat:'modal'},
+  {en:'Here', pt:'aqui', cat:'conector'},
+  {en:'House', pt:'casa', cat:'casa'},
+  {en:'Home', pt:'lar / casa', cat:'casa'},
+  {en:'Room', pt:'quarto / cômodo', cat:'casa'},
+  {en:'Bedroom', pt:'quarto (de dormir)', cat:'casa'},
+  {en:'Living room', pt:'sala de estar', cat:'casa'},
+  {en:'Kitchen', pt:'cozinha', cat:'casa'},
+  {en:'Bathroom', pt:'banheiro', cat:'casa'},
+  {en:'Door', pt:'porta', cat:'casa'},
+  {en:'Window', pt:'janela', cat:'casa'},
+  {en:'Wall', pt:'parede', cat:'casa'},
+  {en:'Floor', pt:'chão / andar', cat:'casa'},
+  {en:'Ceiling', pt:'teto', cat:'casa'},
+  {en:'Table', pt:'mesa', cat:'casa'},
+  {en:'Chair', pt:'cadeira', cat:'casa'},
+  {en:'Bed', pt:'cama', cat:'casa'},
+  {en:'Sofa', pt:'sofá', cat:'casa'},
+  {en:'Stairs', pt:'escada', cat:'casa'},
+  {en:'Key', pt:'chave', cat:'casa'},
+  {en:'Garden', pt:'jardim / quintal', cat:'casa'},
+  {en:'Garage', pt:'garagem', cat:'casa'},
+  {en:'Phone', pt:'telefone / celular', cat:'objeto'},
+  {en:'Charger', pt:'carregador', cat:'objeto'},
+  {en:'Laptop', pt:'notebook', cat:'objeto'},
+  {en:'Computer', pt:'computador', cat:'objeto'},
+  {en:'Pen', pt:'caneta', cat:'objeto'},
+  {en:'Pencil', pt:'lápis', cat:'objeto'},
+  {en:'Notebook', pt:'caderno', cat:'objeto'},
+  {en:'Book', pt:'livro', cat:'objeto'},
+  {en:'Backpack', pt:'mochila', cat:'objeto'},
+  {en:'Wallet', pt:'carteira', cat:'objeto'},
+  {en:'Glasses', pt:'óculos', cat:'objeto'},
+  {en:'Watch', pt:'relógio (de pulso)', cat:'objeto'},
+  {en:'Bottle', pt:'garrafa', cat:'objeto'},
+  {en:'Cup', pt:'xícara / copo', cat:'objeto'},
+  {en:'Plate', pt:'prato', cat:'objeto'},
+  {en:'Spoon', pt:'colher', cat:'objeto'},
+  {en:'Fork', pt:'garfo', cat:'objeto'},
+  {en:'Knife', pt:'faca', cat:'objeto'},
+  {en:'Umbrella', pt:'guarda-chuva', cat:'objeto'},
+  {en:'Bag', pt:'bolsa / sacola', cat:'objeto'},
+  {en:'In', pt:'em / dentro de', cat:'preposicao'},
+  {en:'On', pt:'em cima de / sobre', cat:'preposicao'},
+  {en:'Under', pt:'embaixo de', cat:'preposicao'},
+  {en:'At', pt:'em (ponto específico)', cat:'preposicao'},
+  {en:'To', pt:'para / a', cat:'preposicao'},
+  {en:'From', pt:'de (origem)', cat:'preposicao'},
+  {en:'With', pt:'com', cat:'preposicao'},
+  {en:'Without', pt:'sem', cat:'preposicao'},
+  {en:'Between', pt:'entre (dois)', cat:'preposicao'},
+  {en:'Behind', pt:'atrás de', cat:'preposicao'},
+  {en:'In front of', pt:'na frente de', cat:'preposicao'},
+  {en:'Next to', pt:'ao lado de', cat:'preposicao'},
+  {en:'Near', pt:'perto de', cat:'preposicao'},
+  {en:'Over', pt:'por cima de / acima', cat:'preposicao'},
+  {en:'Into', pt:'para dentro de', cat:'preposicao'},
+  {en:'About', pt:'sobre / a respeito de', cat:'preposicao'},
+  {en:'For', pt:'para / por', cat:'preposicao'},
+  {en:'Before', pt:'antes de', cat:'preposicao'},
+  {en:'After', pt:'depois de', cat:'preposicao'},
+  {en:'During', pt:'durante', cat:'preposicao'},
+  {en:'Water', pt:'água', cat:'comida'},
+  {en:'Coffee', pt:'café', cat:'comida'},
+  {en:'Bread', pt:'pão', cat:'comida'},
+  {en:'Rice', pt:'arroz', cat:'comida'},
+  {en:'Meat', pt:'carne', cat:'comida'},
+  {en:'Chicken', pt:'frango', cat:'comida'},
+  {en:'Fruit', pt:'fruta', cat:'comida'},
+  {en:'Breakfast', pt:'café da manhã', cat:'comida'},
+  {en:'Lunch', pt:'almoço', cat:'comida'},
+  {en:'Dinner', pt:'jantar', cat:'comida'},
+];
+
+/* ── BROWSE ── */
+let vMode = 'browse';
+let vCat = 'all';
+let vSearch = '';
+
+function vGetFiltered() {
+  return words.filter(w => {
+    const cOk = vCat === 'all' || w.cat === vCat;
+    const sOk = !vSearch || w.en.toLowerCase().includes(vSearch) || w.pt.toLowerCase().includes(vSearch);
+    return cOk && sOk;
+  });
+}
+
+function vRender() {
+  const grid = document.getElementById('words-grid');
+  const empty = document.getElementById('empty-state');
+  const browseArea = document.getElementById('vbrowse-area');
+  const quizArea = document.getElementById('quiz-area');
+
+  if (vMode === 'quiz') {
+    browseArea.style.display = 'none';
+    quizArea.classList.add('visible');
+    return;
+  }
+
+  browseArea.style.display = 'block';
+  quizArea.classList.remove('visible');
+
+  const filtered = vGetFiltered();
+  empty.style.display = filtered.length === 0 ? 'block' : 'none';
+  grid.innerHTML = '';
+  filtered.forEach(w => {
+    const card = document.createElement('div');
+    card.className = 'word-card';
+    card.innerHTML =
+      '<div class="wc-cat">' + w.cat + '</div>' +
+      '<div class="wc-en">' + w.en + '</div>' +
+      '<div class="wc-pt">' + w.pt + '</div>';
+    grid.appendChild(card);
+  });
+}
+
+function setVMode(m) {
+  vMode = m;
+  document.querySelectorAll('.vmtab').forEach((b, i) => {
+    b.classList.toggle('active', ['browse','quiz'][i] === m);
+  });
+  if (m === 'quiz') startQuiz();
+  vRender();
+}
+
+function vFilterCat(btn, cat) {
+  vCat = cat;
+  document.querySelectorAll('.vfbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  vRender();
+}
+
+function vFilterWords() {
+  vSearch = document.getElementById('vsearch').value.toLowerCase();
+  vRender();
+}
+
+/* ── QUIZ ── */
+let quizList = [];
+let quizIdx = 0;
+
+function startQuiz() {
+  quizList = [...words].sort(() => Math.random() - 0.5);
+  quizIdx = 0;
+  showCard();
+}
+
+function restartQuiz() {
+  quizList.sort(() => Math.random() - 0.5);
+  quizIdx = 0;
+  showCard();
+}
+
+function showCard() {
+  const revealBtn = document.getElementById('qreveal-btn');
+  const nextBtn = document.getElementById('qnext-btn');
+
+  if (quizIdx >= quizList.length) {
+    document.getElementById('qz-cat').textContent = '';
+    document.getElementById('qz-word').textContent = '🎉';
+    document.getElementById('qz-reveal').textContent = 'Você revisou todas as palavras!';
+    document.getElementById('qz-reveal').classList.add('show');
+    document.getElementById('qprog-text').textContent = 'Sessão concluída!';
+    document.getElementById('vprog-fill').style.width = '100%';
+    revealBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+    return;
+  }
+
+  const w = quizList[quizIdx];
+  document.getElementById('qz-cat').textContent = w.cat;
+  document.getElementById('qz-word').textContent = w.en;
+  document.getElementById('qz-reveal').textContent = w.pt;
+  document.getElementById('qz-reveal').className = 'qz-reveal';
+  document.getElementById('qprog-text').textContent = 'Carta ' + (quizIdx + 1) + ' de ' + quizList.length;
+  document.getElementById('vprog-fill').style.width = Math.round((quizIdx / quizList.length) * 100) + '%';
+  revealBtn.style.display = 'inline-block';
+  nextBtn.style.display = 'none';
+}
+
+function qReveal() {
+  document.getElementById('qz-reveal').classList.add('show');
+  document.getElementById('qreveal-btn').style.display = 'none';
+  document.getElementById('qnext-btn').style.display = 'inline-block';
+}
+
+function qNext() {
+  quizIdx++;
+  showCard();
+}
+
+// contadores dinamicos
+(function(){
+  var sub = document.getElementById('vsub');
+  var st = document.getElementById('vstat-count');
+  if (sub) sub.textContent = words.length + ' palavras — essenciais e por tema';
+  if (st) st.textContent = '📚 ' + words.length + ' palavras';
+})();
+vRender();
+</script>
+</body>
+</html>
